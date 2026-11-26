@@ -1,0 +1,30 @@
+/* Tailwind v4, loaded WITHOUT its preflight reset: the existing design ships its own reset,
+   and unlayered site styles below always win over Tailwind's layers. */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@import "./styles/01-base.css";
+@import "./styles/02-hero-sections.css";
+@import "./styles/03-catalog.css";
+@import "./styles/04-hero-lens.css";
+@import "./styles/05-overrides.css";
+@import "./styles/06-why.css";
+@import "./styles/07-intro.css";
+@import "./styles/08-about.css";
+@import "./styles/09-addresses-cta-footer.css";
+@import "./styles/10-mobile-menu.css";
+@import "./styles/11-pages.css";
+
+/* Design tokens, also available as utilities: bg-bg, text-ink, text-mute, border-line, bg-sand, font-display ... */
+@theme {
+  --color-bg: #f6f5f2;
+  --color-ink: #24262a;
+  --color-mute: #6d7078;
+  --color-line: #d9d8d3;
+  --color-sand: #c2a68a;
+  --color-blue: #8e9aab;
+  --color-soft: #e7e6e1;
+  --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+}

@@ -1,0 +1,34 @@
+/* hero v5: video + hover lens */
+.hero2{position:relative;height:calc(100svh - 20px);min-height:620px;max-height:980px;margin:10px;border-radius:28px;overflow:hidden;isolation:isolate;background:#2b2e36;color:#fff;--fs:clamp(84px,min(18.5vw,29svh),300px)}
+.hero2 .hv{position:absolute;left:-24px;top:-24px;width:calc(100% + 48px);height:calc(100% + 48px);object-fit:cover;z-index:0;filter:blur(3px) brightness(.82) saturate(1.05)}
+.hero2 .shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(14,16,22,.5),rgba(14,16,22,0) 40%,rgba(14,16,22,0) 62%,rgba(14,16,22,.5))}
+.hero2 .wm{position:absolute;inset:0;z-index:3;pointer-events:none}
+.hero2 .t{position:absolute;margin:0;left:clamp(14px,2.4vw,34px);top:calc(88px + var(--fs)*.02);font:300 var(--fs)/.8 var(--d);letter-spacing:-.05em;font-stretch:75%;color:#fff;text-shadow:0 2px 40px rgba(0,0,0,.3)}
+.hero2 .t span{display:block}
+.hero2 .t span:first-child{font-weight:700}
+.hero2 .t span:last-child{margin-left:calc(var(--fs)*.9);width:max-content}
+/* hover lens */
+.hero2{cursor:none}
+.hero2 a,.hero2 button{cursor:pointer}.hero2 input,.hero2 select,.hero2 label{cursor:auto}
+.hero2 .lens,.hero2 .ring{position:absolute;left:0;top:0;z-index:4;pointer-events:none;border-radius:50%;will-change:transform}
+.hero2 .lens{overflow:hidden;background:#222;clip-path:circle(0 at 50% 50%)}
+.hero2 .lens canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero2 .lens::after{content:"";position:absolute;inset:0;border-radius:50%;pointer-events:none;background:radial-gradient(circle at 30% 24%,rgba(255,255,255,.22),rgba(255,255,255,0) 46%)}
+.hero2 .ring{z-index:5;border:1px solid rgba(255,255,255,.85);box-shadow:0 14px 46px rgba(0,0,0,.28),inset 0 0 26px rgba(255,255,255,.14);transform:scale(0)}
+.hero2 .ring::after{content:"";position:absolute;left:50%;top:50%;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:#fff}
+.hero2 .ecw{position:absolute;left:0;top:0;pointer-events:none}
+.hero2 .ecw .t{color:#fff;text-shadow:none;filter:url(#ol)}.hero2 .ecw{will-change:transform}
+.hero2 .nav{z-index:6}
+.hero2 .edition{position:absolute;z-index:5;left:clamp(14px,2.4vw,34px);top:calc(88px + var(--fs)*1.7);display:flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.85)}
+.hero2 .edition::before{content:"";width:22px;height:1px;background:var(--sand);flex:none}
+.hero2 .intro{position:absolute;z-index:5;right:clamp(16px,3vw,40px);top:calc(92px + var(--fs)*.1);max-width:280px;text-shadow:0 1px 24px rgba(0,0,0,.35)}
+.hero2 .intro p{font:500 clamp(20px,2vw,28px)/1.1 var(--d);letter-spacing:-.02em}
+.hero2 .intro small{display:block;margin-top:10px;color:rgba(255,255,255,.85);font-size:13px}
+.hero2 .search{z-index:6;background:rgba(255,255,255,.8)}
+@media (prefers-reduced-motion:no-preference){
+}
+@media (max-width:860px){
+  .hero2{--fs:clamp(64px,24vw,150px);min-height:680px}
+  .hero2 .intro{display:none}
+  .hero2 .t span:last-child{margin-left:calc(var(--fs)*.5)}
+}

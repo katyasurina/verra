@@ -1,0 +1,53 @@
+/* why v2: darkened photo + one calm glass panel */
+.phil>.ph{filter:grayscale(1) contrast(1.02)}
+.phil::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(16,17,20,.58),rgba(16,17,20,.28) 52%,rgba(16,17,20,.5)),rgba(16,17,20,.18)}
+.phil h2{z-index:2;text-shadow:0 2px 40px rgba(0,0,0,.35)}
+.why{position:relative;z-index:2;grid-column:3 / span 2;grid-row:1 / span 4;align-self:center;list-style:none;margin:0;padding:6px 30px;border-radius:26px;color:#fff;background:rgba(16,17,20,.55);border:1px solid rgba(255,255,255,.22);-webkit-backdrop-filter:blur(26px) saturate(1.1);backdrop-filter:blur(26px) saturate(1.1)}
+.why li{padding:24px 0;font-size:15px;line-height:1.5;color:rgba(255,255,255,.82)}
+.why li+li{border-top:1px solid rgba(255,255,255,.16)}
+.why strong{display:block;margin-bottom:6px;font:700 clamp(19px,1.7vw,25px)/1.15 var(--d);letter-spacing:-.015em;color:#fff;transition:color .3s}
+.why li:hover strong{color:var(--sand)}
+@media (max-width:860px){.why{padding:2px 22px}}
+
+.phil>.ph{filter:none}
+/* why v3: compact, photo stays the hero; reasons in one glass strip */
+.phil{display:block;height:min(calc(100svh - 80px),720px);min-height:560px;margin:60px 10px 0;padding:clamp(24px,3.4vw,48px)}
+.phil h2{position:relative;display:block;font-size:clamp(46px,min(8.4vw,15svh),128px);margin:0}
+.phil::before{background:linear-gradient(90deg,rgba(14,16,22,.5),rgba(14,16,22,0) 55%),linear-gradient(180deg,rgba(14,16,22,.25),rgba(14,16,22,0) 40%,rgba(14,16,22,.5))}
+.why{position:absolute;left:clamp(14px,1.6vw,24px);right:clamp(14px,1.6vw,24px);bottom:clamp(14px,1.6vw,24px);display:grid;grid-template-columns:repeat(4,1fr);padding:0;border-radius:22px;background:rgba(14,16,22,.5)}
+.why li{padding:20px 24px 22px;font-size:14px}
+.why li+li{border-top:0;border-left:1px solid rgba(255,255,255,.16)}
+.why strong{font-size:clamp(16px,1.35vw,20px);margin-bottom:5px}
+@media (max-width:1100px){.why{grid-template-columns:1fr 1fr}.why li:nth-child(n+3){border-top:1px solid rgba(255,255,255,.16)}.why li:nth-child(3){border-left:0}}
+@media (max-width:860px){.phil{display:flex;flex-direction:column;justify-content:space-between;height:auto;min-height:640px}.why{position:relative;left:auto;right:auto;bottom:auto;margin-top:40px}}
+@media (max-width:560px){.why{grid-template-columns:1fr}.why li+li{border-left:0;border-top:1px solid rgba(255,255,255,.16)}.why li:nth-child(3){border-top:1px solid rgba(255,255,255,.16)}}
+
+/* why v4: taller + motion */
+.phil{height:min(calc(100svh - 40px),840px);min-height:600px}
+.phil>.ph{inset:-48px 0;scale:1.14;transition:scale 3.2s cubic-bezier(.2,.7,.2,1);will-change:transform}
+.phil.in>.ph{scale:1}
+.phil h2 .ln{display:block;overflow:hidden;padding:.04em 0 .24em;margin-bottom:-.24em}
+.phil h2 .ln i{display:block;font-style:normal}
+.phil h2 .ln.b i{font-weight:700;color:var(--sand);margin-left:.9em}
+.phil:not(.in) h2 .ln i{transform:translateY(110%)}
+.phil.in h2 .ln i{animation:lnIn 1.56s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:calc(var(--i)*.17s + .13s)}
+@keyframes lnIn{from{transform:translateY(110%)}}
+.phil:not(.in) .why{opacity:0;transform:translateY(40px)}
+.phil.in .why{animation:whyIn 1.3s cubic-bezier(.2,.7,.2,1) .65s backwards}
+@keyframes whyIn{from{opacity:0;transform:translateY(40px)}}
+.phil:not(.in) .why li{opacity:0}
+.phil.in .why li{animation:liIn 1.17s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:calc(.98s + var(--i)*.17s)}
+@keyframes liIn{from{opacity:0;transform:translateY(16px)}}
+.why li{transition:opacity .35s}
+.phil.in .why:hover li{opacity:.45}
+.phil.in .why:hover li:hover{opacity:1}
+.why li:hover strong{color:var(--sand)}
+.badge{position:absolute;z-index:3;top:clamp(20px,3vw,40px);right:clamp(20px,3vw,40px);width:clamp(88px,8.4vw,128px);aspect-ratio:1;display:grid;place-items:center;border-radius:50%;color:#fff;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.3);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:background .3s,border-color .3s}
+.badge svg{position:absolute;inset:0;width:100%;height:100%;animation:spin 28s linear infinite}
+.badge text{font:500 9.4px var(--b);fill:currentColor}
+.badge i{font-style:normal;font-size:clamp(18px,1.8vw,26px);line-height:1;transition:transform .3s}
+.badge:hover{background:rgba(194,166,138,.35);border-color:var(--sand)}
+.badge:hover i{transform:translateY(4px)}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.phil *,.phil>.ph{animation:none!important;transition:none!important}.phil>.ph{scale:1}.phil:not(.in) h2 .ln i,.phil:not(.in) .why,.phil:not(.in) .why li{transform:none;opacity:1}}
+@media (max-width:860px){.phil{height:auto;min-height:680px}.badge{width:84px}}
