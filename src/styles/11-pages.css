@@ -151,3 +151,16 @@ html[lang="uk"] :is(.hero2 .t,.hero2 .ecw .t,.pre .word,.foot .word,.sh-ghost,.l
 html[lang="uk"] .nav{font-size:13.5px}
 .page + footer.foot{transform:none!important}
 .page + footer.foot{padding-left:clamp(16px,3vw,40px);padding-right:clamp(16px,3vw,40px)}.page + footer.foot .cols,.page + footer.foot .legal{padding-left:0;padding-right:0}
+
+/* enquiry dialog sections */
+dialog{max-width:520px}
+dialog fieldset{border:0;padding:0;margin:0 0 16px}
+dialog legend{font:600 13px var(--b);letter-spacing:.02em;margin-bottom:8px;padding:0;color:var(--ink)}
+.dt{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dt input,.dt select{margin:0;width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:#fff;font:400 14px var(--b);color:var(--ink)}
+.qchips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.qchips button{padding:8px 14px;border:1px solid var(--line);border-radius:99px;background:#fff;font:400 13px var(--b);color:var(--ink);cursor:pointer;text-align:left;transition:background .2s,color .2s,border-color .2s}
+.qchips button:hover{border-color:var(--ink)}
+.qchips button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+dialog fieldset textarea{margin-bottom:0}
+@media (max-width:480px){.dt{grid-template-columns:1fr}}

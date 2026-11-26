@@ -23,20 +23,25 @@ export default async function handler(req, res) {
     subject: clip(b.subject, 200),
     propertyId: b.propertyId ?? null,
     page: clip(b.page, 300),
-    lang: clip(b.lang, 5),
+    date: /^\d{4}-\d{2}-\d{2}$/.test(String(b.date)) ? String(b.date) : "",
+    time: clip(b.time, 60),
+    questions: Array.isArray(b.questions) ? b.questions.slice(0, 8).map((q) => clip(q, 120)) : [],
   };
   const emailOk = /^\S+@\S+\.\S+$/.test(lead.contact);
   const phoneOk = lead.contact.replace(/\D/g, "").length >= 9;
   if (lead.name.length < 2 || !(emailOk || phoneOk)) return res.status(400).json({ ok: false, error: "invalid" });
 
+  const niceDate = lead.date ? lead.date.split("-").reverse().join(".") : "";
   const text = [
-    "🏠 New enquiry — Verra Estates",
-    `Request: ${lead.subject || "General"}`,
-    `Name: ${lead.name}`,
-    `Contact: ${lead.contact}`,
-    lead.message ? `Message: ${lead.message}` : "",
-    `Page: ${lead.page}`,
-    `Language: ${lead.lang}`,
+    "🏠 Нова заявка — Verra Estates",
+    `Запит: ${lead.subject || "Загальний"}`,
+    `Ім'я: ${lead.name}`,
+    `Контакт: ${lead.contact}`,
+    niceDate ? `Дата перегляду: ${niceDate}` : "",
+    lead.time && lead.time !== "Any time" ? `Час: ${lead.time}` : "",
+    lead.questions.length ? `Питання:\n${lead.questions.map((q) => "• " + q).join("\n")}` : "",
+    lead.message ? `Коментар: ${lead.message}` : "",
+    `Сторінка: ${lead.page}`,
   ]
     .filter(Boolean)
     .join("\n");
@@ -51,7 +56,7 @@ export default async function handler(req, res) {
       const r = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ chat_id: chat, text }),
+        body: JSON.stringify({ chat_id: chat, text, link_preview_options: { is_disabled: true } }),
       });
       delivered = r.ok;
     }

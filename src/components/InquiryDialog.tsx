@@ -1,27 +1,41 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { contact } from "../data/content";
 import { track } from "../lib/analytics";
-import { useT, useLang } from "../lib/i18n";
+import { translate, useT } from "../lib/i18n";
 import { useInquiryRequest } from "../lib/store";
 
 type Status = "idle" | "sending" | "sent" | "error";
+
+const QUESTIONS = [
+  "Is the price negotiable?",
+  "Can I see the floor plans and documents?",
+  "Is a mortgage or instalment plan possible?",
+  "Can we do the viewing by video call?",
+  "What are the monthly utility costs?",
+  "Is parking included?",
+];
+const TIMES = ["Any time", "Morning (9:00–12:00)", "Afternoon (12:00–16:00)", "Evening (16:00–19:00)"];
+const today = (): string => new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
 
 const looksLikeContact = (v: string): boolean => /^\S+@\S+\.\S+$/.test(v.trim()) || v.replace(/\D/g, "").length >= 9;
 
 export function InquiryDialog() {
   const t = useT();
-  const lang = useLang();
   const request = useInquiryRequest();
   const dialog = useRef<HTMLDialogElement>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [fieldError, setFieldError] = useState("");
   const [message, setMessage] = useState("");
+  const [picked, setPicked] = useState<string[]>([]);
+  const [other, setOther] = useState(false);
 
   useEffect(() => {
     if (!request) return;
     setStatus("idle");
     setFieldError("");
     setMessage(request.note ?? "");
+    setPicked([]);
+    setOther(!!request.note);
     if (!dialog.current?.open) dialog.current?.showModal();
   }, [request]);
 
@@ -42,11 +56,14 @@ export function InquiryDialog() {
         body: JSON.stringify({
           name,
           contact: phoneOrEmail,
-          message: message.trim(),
+          date: String(data.get("date") ?? ""),
+          time: String(data.get("time") ?? ""),
+          // questions are sent in Ukrainian, the language of the agent who reads them
+          questions: picked.map((q) => translate(q, "ua")),
+          message: other ? message.trim() : "",
           subject: request?.title ?? "",
           propertyId: request?.propertyId ?? null,
           page: window.location.href,
-          lang,
           website: String(data.get("website") ?? ""), // honeypot: real people leave it empty
         }),
       });
@@ -69,7 +86,33 @@ export function InquiryDialog() {
           <p>{request?.subtitle && request.propertyId == null && !request.note ? t(request.subtitle) : request?.subtitle ?? t("Leave your details. An advisor replies within one working day.")}</p>
           <input name="n" placeholder={t("Full name")} required aria-label={t("Full name")} autoComplete="name" />
           <input name="p" placeholder={t("Phone or email")} required aria-label={t("Phone or email")} autoComplete="tel" />
-          <textarea value={message} onChange={(e) => setMessage(e.target.value)} rows={3} placeholder={t("Preferred date or questions")} aria-label={t("Preferred date or questions")} />
+          <fieldset>
+            <legend>{t("1. Choose a date")}</legend>
+            <div className="dt">
+              <input type="date" name="date" min={today()} aria-label={t("Preferred date")} />
+              <select name="time" aria-label={t("Preferred time")}>
+                {TIMES.map((x) => (
+                  <option key={x} value={x}>
+                    {t(x)}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>{t("2. Ask a question")}</legend>
+            <div className="qchips">
+              {QUESTIONS.map((q) => (
+                <button key={q} type="button" className={picked.includes(q) ? "on" : ""} aria-pressed={picked.includes(q)} onClick={() => setPicked((p) => (p.includes(q) ? p.filter((x) => x !== q) : [...p, q]))}>
+                  {t(q)}
+                </button>
+              ))}
+              <button type="button" className={other ? "on" : ""} aria-pressed={other} onClick={() => setOther((o) => !o)}>
+                {t("Another question…")}
+              </button>
+            </div>
+            {other && <textarea value={message} onChange={(e) => setMessage(e.target.value)} rows={3} placeholder={t("Write your own question")} aria-label={t("Write your own question")} />}
+          </fieldset>
           <input className="hp" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
           {fieldError && (
             <p className="err" role="alert">
