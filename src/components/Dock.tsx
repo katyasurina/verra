@@ -48,12 +48,16 @@ export function Dock() {
         )}
         <div className={`fab${open ? " open" : ""}`}>
           <div className="fabmenu" role="menu" aria-hidden={!open}>
-            <a href={social.telegram} target="_blank" rel="noopener noreferrer" tabIndex={open ? 0 : -1}>
-              Telegram
-            </a>
-            <a href={social.whatsapp} target="_blank" rel="noopener noreferrer" tabIndex={open ? 0 : -1}>
-              WhatsApp
-            </a>
+            {social.telegram && (
+              <a href={social.telegram} target="_blank" rel="noopener noreferrer" tabIndex={open ? 0 : -1}>
+                Telegram
+              </a>
+            )}
+            {social.whatsapp && (
+              <a href={social.whatsapp} target="_blank" rel="noopener noreferrer" tabIndex={open ? 0 : -1}>
+                WhatsApp
+              </a>
+            )}
             <a href={contact.phoneHref} tabIndex={open ? 0 : -1}>
               {t("Call")}
             </a>

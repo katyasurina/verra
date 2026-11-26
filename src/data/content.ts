@@ -56,11 +56,12 @@ export const contact = {
   socials: [
     { label: "Instagram", href: "https://www.instagram.com/" },
     { label: "LinkedIn", href: "https://www.linkedin.com/" },
-    { label: "Telegram", href: "https://t.me/" },
-  ],
+      ],
 };
 
+/** Set VITE_TELEGRAM_URL (https://t.me/your_username) and VITE_WHATSAPP_URL (https://wa.me/380...) in Vercel env.
+ *  Empty value = the item is hidden. */
 export const social = {
-  telegram: "https://t.me/verra_estates", // TODO: real Telegram username
-  whatsapp: "https://wa.me/380440000000", // TODO: real WhatsApp number
+  telegram: (import.meta.env.VITE_TELEGRAM_URL as string | undefined) || "",
+  whatsapp: (import.meta.env.VITE_WHATSAPP_URL as string | undefined) || "",
 };
