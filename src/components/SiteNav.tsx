@@ -34,25 +34,23 @@ export function SiteNav() {
   return (
     <>
       <div className="nav glass">
-        <nav>
-          <Link to="/catalog">{t("Properties")}</Link>
-          <Link to="/#locs">{t("Locations")}</Link>
-        </nav>
         <Link className="logo" to="/">
           VERRA
         </Link>
+        <nav className="links">
+          <Link to="/catalog">{t("Properties")}</Link>
+          <Link to="/#locs">{t("Locations")}</Link>
+          <Link to="/#about">{t("About")}</Link>
+          <Link to="/#contact">{t("Contact")}</Link>
+        </nav>
         <div className="navr">
-          <nav>
-            <Link to="/#about">{t("About")}</Link>
-            <Link to="/#contact">{t("Contact")}</Link>
-            <Link to="/favorites" className="favlink" aria-label={t("Favorites")}>
-              <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
-                <path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.7a4.3 4.3 0 0 1 7.5 2.6c0 5.6-7.5 10.2-7.5 10.2z" fill={favs.length ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
-              </svg>
-              {favs.length > 0 && <b>{favs.length}</b>}
-            </Link>
-            <LangSwitch />
-          </nav>
+          <Link to="/favorites" className="favlink" aria-label={t("Favorites")}>
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+              <path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.7a4.3 4.3 0 0 1 7.5 2.6c0 5.6-7.5 10.2-7.5 10.2z" fill={favs.length ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+            </svg>
+            {favs.length > 0 && <b>{favs.length}</b>}
+          </Link>
+          <LangSwitch />
           <button type="button" className="navcta" onClick={() => openInquiry()}>
             {t("Request a viewing")}
           </button>
