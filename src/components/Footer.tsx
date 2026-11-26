@@ -64,8 +64,12 @@ export function Footer() {
         <span>© {new Date().getFullYear()} Verra Estates</span>
         <span className="flinks">
           <Link to="/catalog">{t("Properties")}</Link>
+          <Link to="/journal">{t("Journal")}</Link>
+          <Link to="/team">{t("Our team")}</Link>
           <Link to="/favorites">{t("Favorites")}</Link>
           <Link to="/compare">{t("Compare")}</Link>
+          <Link to="/privacy">{t("Privacy policy")}</Link>
+          <Link to="/terms">{t("Terms of use")}</Link>
         </span>
         <a href="#top" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>{t("Back to top")} ↑</a>
       </div>

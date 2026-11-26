@@ -2,6 +2,8 @@
 // Set these in Vercel → Project → Settings → Environment Variables:
 //   TELEGRAM_BOT_TOKEN  (from @BotFather)
 //   TELEGRAM_CHAT_ID    (your chat id, or a group id)
+// Optional confirmation email to the visitor (if they left an email address):
+//   RESEND_API_KEY      (https://resend.com), MAIL_FROM (for example "Verra Estates <hello@yourdomain.com>")
 // Optional: FORM_WEBHOOK_URL (any webhook, for example Zapier / Make / Google Apps Script) gets the same JSON.
 
 const clip = (v, n) => String(v ?? "").slice(0, n);
@@ -23,6 +25,7 @@ export default async function handler(req, res) {
     subject: clip(b.subject, 200),
     propertyId: b.propertyId ?? null,
     page: clip(b.page, 300),
+    lang: b.lang === "ua" ? "ua" : "en",
     date: /^\d{4}-\d{2}-\d{2}$/.test(String(b.date)) ? String(b.date) : "",
     time: clip(b.time, 60),
     questions: Array.isArray(b.questions) ? b.questions.slice(0, 8).map((q) => clip(q, 120)) : [],
@@ -66,6 +69,28 @@ export default async function handler(req, res) {
     }
   } catch (e) {
     console.error("inquiry delivery failed", e);
+  }
+
+  // confirmation email to the visitor
+  const resend = process.env.RESEND_API_KEY;
+  if (resend && emailOk) {
+    const ua = lead.lang === "ua";
+    try {
+      await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${resend}`, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          from: process.env.MAIL_FROM || "Verra Estates <onboarding@resend.dev>",
+          to: [lead.contact],
+          subject: ua ? "Verra Estates: ми отримали ваш запит" : "Verra Estates: we received your enquiry",
+          text: ua
+            ? `Доброго дня, ${lead.name}!\n\nДякуємо за запит${lead.subject ? ` («${lead.subject}»)` : ""}. Наш радник зв'яжеться з вами протягом робочого дня.\n\nVerra Estates`
+            : `Hello ${lead.name},\n\nThank you for your enquiry${lead.subject ? ` ("${lead.subject}")` : ""}. An advisor will contact you within one working day.\n\nVerra Estates`,
+        }),
+      });
+    } catch (e) {
+      console.error("confirmation email failed", e);
+    }
   }
 
   if (!delivered) console.log("INQUIRY (no delivery channel configured):", JSON.stringify(lead));

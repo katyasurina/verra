@@ -2,6 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://verra-orcin.vercel.app/</loc></url>
   <url><loc>https://verra-orcin.vercel.app/catalog</loc></url>
+  <url><loc>https://verra-orcin.vercel.app/journal</loc></url>
+  <url><loc>https://verra-orcin.vercel.app/team</loc></url>
+  <url><loc>https://verra-orcin.vercel.app/privacy</loc></url>
+  <url><loc>https://verra-orcin.vercel.app/terms</loc></url>
   <url><loc>https://verra-orcin.vercel.app/property/0</loc></url>
   <url><loc>https://verra-orcin.vercel.app/property/1</loc></url>
   <url><loc>https://verra-orcin.vercel.app/property/2</loc></url>
@@ -17,4 +21,7 @@
   <url><loc>https://verra-orcin.vercel.app/property/12</loc></url>
   <url><loc>https://verra-orcin.vercel.app/property/13</loc></url>
   <url><loc>https://verra-orcin.vercel.app/property/14</loc></url>
+  <url><loc>https://verra-orcin.vercel.app/journal/read-a-floor-plan</loc></url>
+  <url><loc>https://verra-orcin.vercel.app/journal/kyiv-districts</loc></url>
+  <url><loc>https://verra-orcin.vercel.app/journal/buying-from-abroad</loc></url>
 </urlset>

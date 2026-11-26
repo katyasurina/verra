@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { contact } from "../data/content";
 import { track } from "../lib/analytics";
-import { translate, useT } from "../lib/i18n";
+import { translate, useLang, useT } from "../lib/i18n";
+import { Link } from "../lib/router";
 import { useInquiryRequest } from "../lib/store";
 
 type Status = "idle" | "sending" | "sent" | "error";
@@ -21,6 +22,7 @@ const looksLikeContact = (v: string): boolean => /^\S+@\S+\.\S+$/.test(v.trim())
 
 export function InquiryDialog() {
   const t = useT();
+  const lang = useLang();
   const request = useInquiryRequest();
   const dialog = useRef<HTMLDialogElement>(null);
   const [status, setStatus] = useState<Status>("idle");
@@ -64,6 +66,7 @@ export function InquiryDialog() {
           subject: request?.title ?? "",
           propertyId: request?.propertyId ?? null,
           page: window.location.href,
+          lang,
           website: String(data.get("website") ?? ""), // honeypot: real people leave it empty
         }),
       });
@@ -113,6 +116,13 @@ export function InquiryDialog() {
             </div>
             {other && <textarea value={message} onChange={(e) => setMessage(e.target.value)} rows={3} placeholder={t("Write your own question")} aria-label={t("Write your own question")} />}
           </fieldset>
+          <p className="consent">
+            {t("By sending this form you agree to the")}{" "}
+            <Link to="/privacy" onClick={() => dialog.current?.close()}>
+              {t("Privacy policy")}
+            </Link>
+            .
+          </p>
           <input className="hp" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
           {fieldError && (
             <p className="err" role="alert">

@@ -9,7 +9,7 @@ export function PageShell({ children }: { children: ReactNode }) {
       <div className="subhead">
         <SiteNav />
       </div>
-      <main className="page wrap">{children}</main>
+      <main className="page wrap" id="content" tabIndex={-1}>{children}</main>
       <Footer />
     </>
   );

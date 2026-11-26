@@ -28,6 +28,7 @@ export function SiteNav() {
     ["/catalog", "Properties"],
     ["/#locs", "Locations"],
     ["/#about", "About"],
+    ["/journal", "Journal"],
     ["/#contact", "Contact"],
   ];
 
@@ -41,6 +42,7 @@ export function SiteNav() {
           <Link to="/catalog">{t("Properties")}</Link>
           <Link to="/#locs">{t("Locations")}</Link>
           <Link to="/#about">{t("About")}</Link>
+          <Link to="/journal">{t("Journal")}</Link>
           <Link to="/#contact">{t("Contact")}</Link>
         </nav>
         <div className="navr">

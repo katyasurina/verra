@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { formatPrice } from "../lib/catalog";
 import { useT } from "../lib/i18n";
+import { monthlyPayment } from "../lib/mortgage";
 
 /** Indicative annuity-loan calculator. */
 export function Mortgage({ price }: { price: number }) {
@@ -9,11 +10,7 @@ export function Mortgage({ price }: { price: number }) {
   const [years, setYears] = useState(20);
   const [rate, setRate] = useState(7);
 
-  const loan = price * (1 - down / 100);
-  const n = years * 12;
-  const r = rate / 100 / 12;
-  const monthly = r === 0 ? loan / n : (loan * r) / (1 - Math.pow(1 + r, -n));
-  const total = monthly * n;
+  const { loan, monthly, total } = monthlyPayment(price, down, years, rate);
 
   return (
     <section className="mort" aria-labelledby="mort-h">

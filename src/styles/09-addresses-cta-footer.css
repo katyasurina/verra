@@ -41,7 +41,7 @@ footer.foot{position:relative;z-index:8;margin:-34px 10px 0;border-radius:32px 3
 @media (max-width:860px){
  .bar{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px;padding:14px;border-radius:24px}
  .bar input,.bar select{width:100%;min-width:0;padding:11px 12px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.5);font-size:15px}
- .bar>select:first-child{grid-column:1 / -1}
+ .bar>.qs,.bar>select:nth-of-type(1){grid-column:1 / -1}
  .bar .sp{display:none}
  .bar #c-sort{order:1}.bar .count{order:2}.bar button{order:3}
  .bar .count{grid-column:1;padding:6px 2px 0}

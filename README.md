@@ -68,3 +68,21 @@ All rights reserved. Photos and video are AI-generated placeholders for the demo
 - UA / EN switcher (dictionary in `src/data/ua.ts`), favourites and compare list saved in the browser
 - Enquiry form posts to `api/inquiry.js` (Vercel function) → Telegram. Set `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` in Vercel → Settings → Environment Variables. Optional: `FORM_WEBHOOK_URL`, `VITE_GA_ID` (GA4).
 - `vercel.json` rewrites all routes to `index.html`.
+
+## More features
+- `/catalog?view=map`: all residences on an OpenStreetMap map (no map library), search by name or district
+- `/team`, `/journal`, `/journal/:slug`, `/privacy`, `/terms` (UA / EN content lives in `src/data/*.ts`)
+- Enquiry form: date + time, question chips, honeypot, Telegram delivery, optional confirmation email (Resend) and Google Sheets (see `docs/google-sheets.md`)
+- Accessibility: skip link, focus rings, keyboard-friendly menus; `ErrorBoundary` instead of a blank page
+- `npm test` runs unit tests for filters, URL round trip and the mortgage maths; `.github/workflows/ci.yml` runs tests and the build on every push
+
+## Environment variables (Vercel → Settings → Environment Variables)
+| name | purpose |
+| --- | --- |
+| `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | enquiries to Telegram |
+| `RESEND_API_KEY`, `MAIL_FROM` | confirmation email to the visitor (optional) |
+| `FORM_WEBHOOK_URL` | Google Sheets or any webhook (optional) |
+| `VITE_GA_ID` | Google Analytics 4 (optional) |
+
+## How to add a property
+Add one object to `properties` in `src/data/properties.ts` (id, name, type, location, price, photos, coordinates, description in EN and UA) and add its URL to `public/sitemap.xml`.

@@ -1,6 +1,8 @@
 import type { Property, PropertyType } from "../data/properties";
 
 export interface Filters {
+  /** free-text search: name, district, type */
+  q: string;
   location: string;
   type: "" | PropertyType;
   /** "min-max" or "" */
@@ -9,17 +11,19 @@ export interface Filters {
   sort: "" | "pa" | "pd" | "ad";
 }
 
-export const emptyFilters: Filters = { location: "", type: "", price: "", beds: "", sort: "" };
+export const emptyFilters: Filters = { q: "", location: "", type: "", price: "", beds: "", sort: "" };
 
 export const formatPrice = (n: number): string => "€" + n.toLocaleString("en-US");
 
 export function filterProperties(list: Property[], f: Filters): Property[] {
   const loc = f.location.trim().toLowerCase();
+  const q = f.q.trim().toLowerCase();
   const [min, max] = f.price ? f.price.split("-").map(Number) : [0, 0];
   const beds = Number(f.beds) || 0;
   const out = list.filter(
     (p) =>
       (!loc || p.location.toLowerCase().includes(loc)) &&
+      (!q || `${p.name} ${p.location} ${p.type}`.toLowerCase().includes(q)) &&
       (!f.type || p.type === f.type) &&
       (!max || (p.price >= min && p.price <= max)) &&
       p.beds >= beds,
@@ -45,6 +49,7 @@ export const queryToFilters = (q: URLSearchParams): Filters => {
   const sort = q.get("sort") ?? "";
   const type = q.get("type") ?? "";
   return {
+    q: (q.get("q") ?? "").slice(0, 60),
     location: q.get("location") ?? "",
     type: (["Apartment", "Penthouse", "House", "Villa", "Townhouse"].includes(type) ? type : "") as Filters["type"],
     price: /^\d+-\d+$/.test(q.get("price") ?? "") ? (q.get("price") as string) : "",

@@ -14,6 +14,7 @@ export function FilterBar({ filters, onFilters, count }: Props) {
   const set = <K extends keyof Filters>(key: K) => (e: { target: { value: string } }) => onFilters({ ...filters, [key]: e.target.value as Filters[K] });
   return (
     <div className="bar" id="bar">
+      <input className="qs" type="search" value={filters.q} onChange={set("q")} placeholder={t("Search by name or district")} aria-label={t("Search by name or district")} />
       <select value={filters.location} onChange={set("location")} aria-label={t("Location")}>
         <option value="">{t("All locations")}</option>
         {locations.map((l) => (

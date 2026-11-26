@@ -10,7 +10,11 @@ import { Locations } from "./components/Locations";
 import { CatalogPage } from "./components/pages/CatalogPage";
 import { ComparePage } from "./components/pages/ComparePage";
 import { FavoritesPage } from "./components/pages/FavoritesPage";
+import { ArticlePage } from "./components/pages/ArticlePage";
+import { JournalPage } from "./components/pages/JournalPage";
+import { LegalPage } from "./components/pages/LegalPage";
 import { NotFound } from "./components/pages/NotFound";
+import { TeamPage } from "./components/pages/TeamPage";
 import { PropertyPage } from "./components/pages/PropertyPage";
 import { Residences } from "./components/Residences";
 import { Why } from "./components/Why";
@@ -45,7 +49,7 @@ function Home() {
           <feComposite in="SourceGraphic" in2="e" operator="out" />
         </filter>
       </svg>
-      <main>
+      <main id="content" tabIndex={-1}>
         <div className="stage">
           <Hero onSearch={search} />
           <About />
@@ -61,6 +65,7 @@ function Home() {
 }
 
 export default function App() {
+  const t = useT();
   const { path, hash } = useLocation();
   const first = useRef(true);
 
@@ -94,16 +99,25 @@ export default function App() {
   }, [path]);
 
   const m = path.match(/^\/property\/(\d+)$/);
+  const article = path.match(/^\/journal\/([a-z0-9-]+)$/);
   let page;
   if (path === "/") page = <Home />;
   else if (path === "/catalog") page = <CatalogPage />;
   else if (path === "/favorites") page = <FavoritesPage />;
   else if (path === "/compare") page = <ComparePage />;
+  else if (path === "/journal") page = <JournalPage />;
+  else if (path === "/team") page = <TeamPage />;
+  else if (path === "/privacy") page = <LegalPage kind="privacy" />;
+  else if (path === "/terms") page = <LegalPage kind="terms" />;
+  else if (article) page = <ArticlePage slug={article[1]} />;
   else if (m) page = <PropertyPage id={Number(m[1])} />;
   else page = <NotFound />;
 
   return (
     <>
+      <a className="skip" href="#content" onClick={(e) => { e.preventDefault(); const el = document.getElementById("content") ?? document.querySelector("main"); (el as HTMLElement | null)?.focus(); el?.scrollIntoView(); }}>
+        {t("Skip to content")}
+      </a>
       {page}
       <Dock />
       <InquiryDialog />
