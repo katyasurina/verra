@@ -1,4 +1,24 @@
-# Verra Estates
+<p align="center">
+  <img src="docs/cover.jpg" alt="VERRA Estates — premium real estate website" width="860">
+</p>
+
+<h1 align="center">VERRA Estates</h1>
+
+<p align="center">
+  Premium real-estate website for a boutique agency in Kyiv.<br>
+  <a href="https://verra-orcin.vercel.app"><b>Live demo</b></a> ·
+  <a href="docs/demo.mp4"><b>Watch the video</b></a>
+</p>
+
+<p align="center">
+  <a href="docs/demo.mp4"><img src="docs/demo.gif" alt="Demo" width="320"></a>
+</p>
+
+<p align="center">
+  React 19 · TypeScript · Vite · Tailwind CSS v4 · Vercel
+</p>
+
+---
 
 A premium real-estate site for a boutique agency in Kyiv: large photography, expressive typography, glass-effect cards and scroll-driven motion.
 
@@ -46,35 +66,51 @@ src/
 
 Everything respects `prefers-reduced-motion`.
 
-## Before deploying
+## Before going live
 
-Search for `TODO` in `index.html` and `src/`:
+- [ ] Replace the placeholder phone, e-mail, address and social links in `src/data/content.ts`
+- [ ] Set `VITE_TELEGRAM_URL` / `VITE_WHATSAPP_URL` in Vercel to show the Telegram and WhatsApp buttons (hidden when empty)
+- [ ] Replace placeholder photos for the last properties with real ones
+- [ ] Optional: `RESEND_API_KEY` + `MAIL_FROM`, `FORM_WEBHOOK_URL`, `VITE_GA_ID`
 
-- [ ] Replace `YOUR-DOMAIN.com` (`canonical`, `og:url`, `og:image`, `twitter:image`)
-- [ ] Add a 1200×630 `og-image.jpg`, `apple-touch-icon.png` (180×180) and real favicons to `public/`
-- [ ] Connect the inquiry form (`src/components/InquiryDialog.tsx`) to a backend / CRM / email service
-- [ ] Replace placeholder phone, e-mail, address and social links (`src/data/content.ts`)
-- [ ] Add GA4 / Meta Pixel at the marked comments in `index.html`
-- [ ] Optimise Cloudinary media (`f_auto,q_auto`) and compress the hero video
-
-After deploy: [PageSpeed Insights](https://pagespeed.web.dev) and a link-preview checker such as [opengraph.xyz](https://www.opengraph.xyz).
+After deploy: [PageSpeed Insights](https://pagespeed.web.dev) and [opengraph.xyz](https://www.opengraph.xyz) for the link preview.
 
 ## License
 
 All rights reserved. Photos and video are AI-generated placeholders for the demo.
 
-## Pages and features
-- `/` landing · `/catalog` all 15 residences (filters live in the URL) · `/property/:id` detail page (gallery, map, mortgage calculator, similar) · `/favorites` · `/compare`
-- UA / EN switcher (dictionary in `src/data/ua.ts`), favourites and compare list saved in the browser
-- Enquiry form posts to `api/inquiry.js` (Vercel function) → Telegram. Set `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` in Vercel → Settings → Environment Variables. Optional: `FORM_WEBHOOK_URL`, `VITE_GA_ID` (GA4).
-- `vercel.json` rewrites all routes to `index.html`.
+## Features
 
-## More features
-- `/catalog?view=map`: all residences on an OpenStreetMap map (no map library), search by name or district
-- `/team`, `/journal`, `/journal/:slug`, `/privacy`, `/terms` (UA / EN content lives in `src/data/*.ts`)
-- Enquiry form: date + time, question chips, honeypot, Telegram delivery, optional confirmation email (Resend) and Google Sheets (see `docs/google-sheets.md`)
-- Accessibility: skip link, focus rings, keyboard-friendly menus; `ErrorBoundary` instead of a blank page
+**Catalog and search**
+- 15 residences; the home page shows 6 with a link to the full catalog (`/catalog`)
+- Filters by location, type, price and bedrooms, plus text search; the filters live in the URL, so any result can be shared
+- Map view (`/catalog?view=map`): a custom OpenStreetMap slippy map with no map library, quick presets for Kyiv, the region and Odesa
+
+**Property page** (`/property/:id`)
+- Photo gallery, key facts, description, features list and a location map
+- Mortgage calculator (price, down payment, term, rate) with the monthly payment
+- Similar properties
+
+**Tools for buyers**
+- Favourites (`/favorites`) and compare list (`/compare`, up to 3 properties side by side), saved in the browser
+- Viewing request form: date picker, ready-made question chips or a custom question, honeypot spam protection
+
+**Backend** (`api/inquiry.js`, Vercel serverless function)
+- Sends each enquiry to Telegram through the Bot API
+- Optional confirmation email to the visitor (Resend)
+- Optional Google Sheets or webhook export (see `docs/google-sheets.md`)
+
+**Content and pages**
+- UA / EN switcher (dictionary in `src/data/ua.ts`), with typography tuned separately for Ukrainian
+- `/team`, `/journal`, `/journal/:slug`, `/privacy`, `/terms`
+- Hand-written History API router, `vercel.json` rewrites all routes to `index.html`
+- Per-page titles and meta tags, sitemap, robots.txt, Open Graph image
+
+**Quality**
+- Accessibility: skip link, focus rings, keyboard-friendly menus, `prefers-reduced-motion`
+- `ErrorBoundary` instead of a blank page
 - `npm test` runs unit tests for filters, URL round trip and the mortgage maths; `.github/workflows/ci.yml` runs tests and the build on every push
+- Optional Google Analytics 4
 
 ## Environment variables (Vercel → Settings → Environment Variables)
 | name | purpose |
@@ -83,6 +119,7 @@ All rights reserved. Photos and video are AI-generated placeholders for the demo
 | `RESEND_API_KEY`, `MAIL_FROM` | confirmation email to the visitor (optional) |
 | `FORM_WEBHOOK_URL` | Google Sheets or any webhook (optional) |
 | `VITE_GA_ID` | Google Analytics 4 (optional) |
+| `VITE_TELEGRAM_URL`, `VITE_WHATSAPP_URL` | contact buttons (hidden when empty) |
 
 ## How to add a property
 Add one object to `properties` in `src/data/properties.ts` (id, name, type, location, price, photos, coordinates, description in EN and UA) and add its URL to `public/sitemap.xml`.
