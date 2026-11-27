@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <a href="docs/demo.mp4"><img src="docs/demo.gif" alt="Demo" width="320"></a>
+  <a href="docs/demo.mp4"><img src="docs/demo.gif" alt="Demo" width="860"></a>
 </p>
 
 <p align="center">
