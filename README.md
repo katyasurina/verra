@@ -7,11 +7,11 @@
 <p align="center">
   Premium real-estate website for a boutique agency in Kyiv.<br>
   <a href="https://verra-orcin.vercel.app"><b>Live demo</b></a> ·
-  <a href="docs/demo.mp4"><b>Watch the video</b></a>
+  <a href="docs/demo.mp4?raw=true"><b>Watch the video</b></a>
 </p>
 
 <p align="center">
-  <a href="docs/demo.mp4"><img src="docs/demo.gif" alt="Demo" width="860"></a>
+  <img src="docs/demo.gif" alt="VERRA Estates demo" width="860">
 </p>
 
 <p align="center">
